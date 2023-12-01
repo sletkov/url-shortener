@@ -1,0 +1,9 @@
+-- +goose Up
+CREATE TABLE IF NOT EXISTS urls (
+    id SERIAL PRIMARY KEY,
+    url VARCHAR NOT NULL UNIQUE,
+    alias CHAR(10) NOT NULL UNIQUE,
+);
+
+-- +goose Down
+DROP TABLE IF EXISTS urls;

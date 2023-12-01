@@ -1,0 +1,2 @@
+bind_addr: ":8081"
+storage_path: "host=localhost user=sletkov password=postgres dbname=urlsDB sslmode=disable"

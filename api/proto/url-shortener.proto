@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "./api";
+
+service URLShortener {
+    rpc SaveURL (SaveURLRequest) returns (SaveURLResponse) {}
+    rpc GetURL (GetURLRequest) returns (GetURLResponse) {}
+}
+
+message SaveURLRequest {
+    string url = 1;
+}
+
+message SaveURLResponse {
+    string alias = 1;
+}
+
+message GetURLRequest {
+    string alias = 1;
+}
+
+message GetURLResponse {
+    string url = 1;
+}
