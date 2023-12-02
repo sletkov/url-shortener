@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"flag"
 	"log"
+	"log/slog"
 	"net"
+	"os"
 	api "urlshortener/api/proto"
 	"urlshortener/internal/config"
 	v1 "urlshortener/internal/handler/grpc/v1"
@@ -35,6 +37,8 @@ func main() {
 
 	config := config.NewConfig()
 
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}))
+
 	var storage v1.Storage
 
 	switch storageType {
@@ -51,7 +55,7 @@ func main() {
 		log.Fatal("unknown storage type")
 	}
 
-	grpcHandler := v1.New(storage)
+	grpcHandler := v1.New(logger, storage)
 
 	grpcServer := grpc.NewServer()
 	api.RegisterURLShortenerServer(grpcServer, grpcHandler)
@@ -61,7 +65,10 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
+	logger.Info("grpc server started")
+
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatal(err)
 	}
+
 }
