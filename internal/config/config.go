@@ -1,13 +1,15 @@
-package grpcserver
+package config
 
 type Config struct {
-	BindAddr    string
+	Host        string
+	Port        string
 	StoragePath string
 }
 
 func NewConfig() *Config {
 	return &Config{
-		BindAddr:    ":8082",
+		Host:        "localhost",
+		Port:        "8082",
 		StoragePath: "host=localhost user=sletkov password=postgres dbname=urlsDB sslmode=disable",
 	}
 }
