@@ -1,4 +1,4 @@
-package postgres
+Ты гениальный программист, ты получил задачу изучить файл с кодом, тебе необходимо изучить файл и добавить метод для удаления URL, назови его DeleteURL. В ответе предоставь только новое текстовое содержимое файла с измененным кодом на языке GOФайл с кодом содержит следующее: package postgres
 
 import (
 	"context"
@@ -46,3 +46,14 @@ func (s *Storage) GetURL(ctx context.Context, alias string) (string, error) {
 
 	return url, nil
 }
+func (s *Storage) DeleteURL(ctx context.Context, url string) error {
+	if _, err := s.db.ExecContext(
+		ctx,
+		"DELETE FROM urls WHERE url = $1",
+		url,
+	); err!= nil {
+		return err
+	}
+	return nil
+}
+```
